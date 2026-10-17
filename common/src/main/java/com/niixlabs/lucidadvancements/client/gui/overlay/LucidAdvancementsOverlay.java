@@ -1,11 +1,10 @@
 package com.niixlabs.lucidadvancements.client.gui.overlay;
 
 import com.niixlabs.lucidadvancements.Constants;
-import com.niixlabs.lucidadvancements.client.cache.TrackedAdvancementsCache;
 import com.niixlabs.lucidadvancements.client.gui.access.AdvancementProgressAccess;
 import com.niixlabs.lucidadvancements.client.gui.util.GuiScale;
-import com.niixlabs.lucidadvancements.client.gui.screen.LucidAdvancementsScreen;
 import com.niixlabs.lucidadvancements.config.LucidConfig;
+import com.niixlabs.lucidadvancements.config.category.CategoryConfigManager;
 import com.niixlabs.lucidadvancements.translation.CriterionTranslator;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementNode;
@@ -15,6 +14,7 @@ import net.minecraft.advancements.DisplayInfo;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.multiplayer.ClientAdvancements;
 import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -22,27 +22,50 @@ import net.minecraft.world.item.ItemStack;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 public final class LucidAdvancementsOverlay {
-    private static final Map<String, CachedOverlayBox> OVERLAY_CACHE = new HashMap<>();
+    private static final long REFRESH_INTERVAL_MS = 500L;
+
+    private static final Map<String, CachedOverlayBox> OVERLAY_CACHE = new ConcurrentHashMap<>();
+    private static final List<AdvancementNode> TASK_CACHE = new ArrayList<>();
     private static Language lastLangInstance = null;
+    private static ClientAdvancements lastAdvancements = null;
+    private static long lastRefresh = 0L;
 
     private LucidAdvancementsOverlay() {}
 
+    public static void invalidateCache() {
+        OVERLAY_CACHE.clear();
+    }
+
     public static void render(GuiGraphics guiGraphics, float partialTick) {
         Minecraft mc = Minecraft.getInstance();
-        TrackedAdvancementsCache.syncIfNeeded(mc);
 
-        if (mc.options.hideGui || mc.player == null || LucidAdvancementsScreen.TRACKED_ADVANCEMENTS.isEmpty()) return;
+        if (mc.options.hideGui || mc.player == null) return;
         if (mc.getConnection() == null || mc.getConnection().getAdvancements() == null) return;
 
+        ClientAdvancements advancements = mc.getConnection().getAdvancements();
         Language currentLangInstance = Language.getInstance();
-        if (currentLangInstance != lastLangInstance) {
+        boolean languageChanged = currentLangInstance != lastLangInstance;
+
+        if (languageChanged) {
             OVERLAY_CACHE.clear();
             lastLangInstance = currentLangInstance;
         }
+
+        long now = System.currentTimeMillis();
+        if (advancements != lastAdvancements || languageChanged || now - lastRefresh >= REFRESH_INTERVAL_MS) {
+            rebuildTaskCache(advancements);
+            lastAdvancements = advancements;
+            lastRefresh = now;
+        }
+
+        if (TASK_CACHE.isEmpty()) return;
 
         double targetScale = GuiScale.targetScale(mc);
         float scaleMod = GuiScale.scaleModifier(mc);
@@ -54,7 +77,8 @@ public final class LucidAdvancementsOverlay {
         int startX = screenWidth - LucidConfig.overlayBoxWidth - LucidConfig.overlayRightMargin;
         int startY = LucidConfig.overlayStartY;
 
-        Map<AdvancementHolder, AdvancementProgress> vanillaProgressMap = ((AdvancementProgressAccess) mc.getConnection().getAdvancements()).lucid$getProgressMap();
+        Map<AdvancementHolder, AdvancementProgress> vanillaProgressMap =
+                ((AdvancementProgressAccess) advancements).lucid$getProgressMap();
 
         guiGraphics.pose().pushPose();
 
@@ -62,20 +86,15 @@ public final class LucidAdvancementsOverlay {
             guiGraphics.pose().scale(scaleMod, scaleMod, 1.0f);
         }
 
-        for (String idStr : LucidAdvancementsScreen.TRACKED_ADVANCEMENTS) {
-            ResourceLocation loc = ResourceLocation.tryParse(idStr);
-            if (loc == null) continue;
+        for (AdvancementNode node : TASK_CACHE) {
+            DisplayInfo display = node.holder().value().display().orElse(null);
+            if (display == null) continue;
 
-            AdvancementNode node = mc.getConnection().getAdvancements().getTree().get(loc);
-            if (node == null || node.holder().value().display().isEmpty()) continue;
-
-            DisplayInfo display = node.holder().value().display().get();
             AdvancementProgress progress = vanillaProgressMap.get(node.holder());
+            if (progress == null || progress.isDone()) continue;
 
-            if (progress == null || progress.isDone()) {
-                continue;
-            }
-
+            ResourceLocation loc = node.holder().id();
+            String idStr = loc.toString();
             List<String> rawRemaining = (List<String>) progress.getRemainingCriteria();
 
             CachedOverlayBox cachedBox = OVERLAY_CACHE.get(idStr);
@@ -94,6 +113,33 @@ public final class LucidAdvancementsOverlay {
         }
 
         guiGraphics.pose().popPose();
+    }
+
+    private static void rebuildTaskCache(ClientAdvancements advancements) {
+        TASK_CACHE.clear();
+
+        Map<AdvancementHolder, AdvancementProgress> progressMap =
+                ((AdvancementProgressAccess) advancements).lucid$getProgressMap();
+        Map<ResourceLocation, Boolean> rootEnabled = new HashMap<>();
+        Set<String> validIds = new HashSet<>();
+
+        for (AdvancementNode node : advancements.getTree().nodes()) {
+            if (node.parent() == null) continue;
+
+            DisplayInfo display = node.holder().value().display().orElse(null);
+            if (display == null || display.isHidden()) continue;
+
+            ResourceLocation rootId = node.root().holder().id();
+            if (!rootEnabled.computeIfAbsent(rootId, CategoryConfigManager::isEnabled)) continue;
+
+            AdvancementProgress progress = progressMap.get(node.holder());
+            if (progress == null || progress.isDone()) continue;
+
+            TASK_CACHE.add(node);
+            validIds.add(node.holder().id().toString());
+        }
+
+        OVERLAY_CACHE.keySet().retainAll(validIds);
     }
 
     private static CachedOverlayBox buildOverlayBox(Font font, ResourceLocation loc, DisplayInfo display, List<String> rawRemaining) {

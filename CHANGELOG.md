@@ -1,3 +1,13 @@
+## v1.3.0
+
+* Removed the manual tracked/untracked state. The HUD now automatically displays every incomplete, visible advancement.
+* HUD entries use the advancement tree's default order; no custom HUD sorting is applied.
+* Removed the Tracked filter, track toggles, the separate Tracked progress bar, and the per-world tracking cache.
+* Category data is preloaded when advancements are received instead of during the first HUD render.
+* HUD boxes now refresh immediately after config changes or hot reloads.
+
+---
+
 ## v1.2.2
 
 * Add multilingual support for config section titles #36
