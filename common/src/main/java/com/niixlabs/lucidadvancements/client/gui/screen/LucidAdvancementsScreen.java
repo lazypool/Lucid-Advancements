@@ -925,6 +925,21 @@ public final class LucidAdvancementsScreen extends Screen implements ClientAdvan
     }
 
     @Override
+    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+        if (super.keyPressed(keyCode, scanCode, modifiers)) {
+            return true;
+        }
+
+        if (minecraft != null && minecraft.options.keyAdvancements.matches(keyCode, scanCode)) {
+            minecraft.setScreen(null);
+            minecraft.mouseHandler.grabMouse();
+            return true;
+        }
+
+        return false;
+    }
+
+    @Override
     public boolean mouseDragged(double mouseX, double mouseY, int button, double dragX, double dragY) {
         double scaleFactor = getScaleFactor();
         mouseY *= scaleFactor;

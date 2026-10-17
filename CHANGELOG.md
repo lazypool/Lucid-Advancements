@@ -5,6 +5,7 @@
 * Removed the Tracked filter, track toggles, the separate Tracked progress bar, and the per-world tracking cache.
 * Category data is preloaded when advancements are received instead of during the first HUD render.
 * HUD boxes now refresh immediately after config changes or hot reloads.
+* Pressing the advancements key again now closes the advancements screen.
 
 ---
 
