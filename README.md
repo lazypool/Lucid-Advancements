@@ -47,7 +47,9 @@ Finding a specific advancement among thousands is now instant. The top navigatio
 Keep your current goals in sight at all times. Lucid Advancements automatically lists every incomplete advancement on a clean HUD overlay, so you can monitor your progress without constantly reopening the menu.
 
 *   **Automatic Display:** Every incomplete, visible advancement is shown by default — no manual setup required.
-*   **Default Order:** HUD boxes use the advancement tree's default unsorted order, while colors, dimensions, and spacing remain configurable.
+*   **Paged HUD:** Up to four advancements are shown per page in the advancement tree's iteration order, reduced automatically to fit the HUD height; press `Ctrl` plus your configured advancements key (default `Ctrl + L`) to cycle pages, with the current page displayed as `x/y`.
+*   **HUD Toggle:** Press `Alt` plus your configured advancements key (default `Alt + L`) to hide or show the HUD.
+*   **Quick Access:** Pressing the configured advancements key alone still opens or closes the advancements screen.
 
 <div align="center">
   

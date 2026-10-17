@@ -28,6 +28,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
+import org.lwjgl.glfw.GLFW;
 
 import java.util.*;
 
@@ -930,7 +931,8 @@ public final class LucidAdvancementsScreen extends Screen implements ClientAdvan
             return true;
         }
 
-        if (minecraft != null && minecraft.options.keyAdvancements.matches(keyCode, scanCode)) {
+        boolean modified = (modifiers & (GLFW.GLFW_MOD_CONTROL | GLFW.GLFW_MOD_ALT)) != 0;
+        if (!modified && minecraft != null && minecraft.options.keyAdvancements.matches(keyCode, scanCode)) {
             minecraft.setScreen(null);
             minecraft.mouseHandler.grabMouse();
             return true;
