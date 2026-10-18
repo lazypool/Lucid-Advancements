@@ -109,11 +109,20 @@ public final class LucidConfig {
     @ConfigOption(comment = "Left screen margin for effect cards")
     public static int effectLeftMargin = 8;
 
+    @ConfigOption(comment = "Right screen margin for effect cards")
+    public static int effectRightMargin = 8;
+
     @ConfigOption(comment = "Show the custom left-side effect display")
     public static boolean effectEnabled = true;
 
     @ConfigOption(comment = "Width of effect cards (minimum 1)")
     public static int effectWidth = 100;
+
+    @ConfigOption(comment = "Starting Y position for effect cards")
+    public static int effectStartY = 55;
+
+    @ConfigOption(comment = "Bottom screen margin for effect cards")
+    public static int effectBottomScreenMargin = 35;
 
     @ConfigOption(comment = "Height of each effect row (minimum 22)")
     public static int effectRowHeight = 22;
@@ -123,6 +132,27 @@ public final class LucidConfig {
 
     @ConfigOption(comment = "Maximum effect rows per column before starting a new column")
     public static int effectMaxRows = 8;
+
+    @ConfigOption(comment = "Background color for effect cards", hex = true)
+    public static int effectBgColor = 0x880A0A0A;
+
+    @ConfigOption(comment = "Width of the effect accent strip")
+    public static int effectAccentWidth = 2;
+
+    @ConfigOption(comment = "Title color for effect cards", hex = true)
+    public static int effectTitleColor = 0xFFFFFFFF;
+
+    @ConfigOption(comment = "Subtitle color for effect cards", hex = true)
+    public static int effectSubtitleColor = 0xFFAAAAAA;
+
+    @ConfigOption(comment = "Effect icon X offset")
+    public static int effectIconXOffset = 6;
+
+    @ConfigOption(comment = "Effect title X offset")
+    public static int effectTitleXOffset = 26;
+
+    @ConfigOption(comment = "Padding subtracted from width to truncate effect titles")
+    public static int effectTitleMaxWidthPadding = 32;
 
     @ConfigOption(comment = "Accent color for beneficial effects", hex = true)
     public static int effectBeneficialAccent = 0xFF00FFAA;
@@ -140,11 +170,50 @@ public final class LucidConfig {
     @ConfigOption(comment = "Maximum simultaneous notifications")
     public static int notificationMaxCount = 6;
 
+    @ConfigOption(comment = "Width of notification cards")
+    public static int notificationWidth = 135;
+
     @ConfigOption(comment = "Height of notification cards (minimum 30)")
     public static int notificationHeight = 30;
 
+    @ConfigOption(comment = "Spacing between notification cards")
+    public static int notificationSpacing = 5;
+
     @ConfigOption(comment = "Top screen margin for centered notifications")
     public static int notificationTopMargin = 12;
+
+    @ConfigOption(comment = "Bottom screen margin for notifications")
+    public static int notificationBottomScreenMargin = 35;
+
+    @ConfigOption(comment = "Background color for notification cards", hex = true)
+    public static int notificationBgColor = 0x880A0A0A;
+
+    @ConfigOption(comment = "Width of the notification accent strip")
+    public static int notificationAccentWidth = 2;
+
+    @ConfigOption(comment = "Notification icon X offset")
+    public static int notificationIconXOffset = 6;
+
+    @ConfigOption(comment = "Notification title X offset")
+    public static int notificationTitleXOffset = 26;
+
+    @ConfigOption(comment = "Padding subtracted from width to truncate notification titles")
+    public static int notificationTitleMaxWidthPadding = 32;
+
+    @ConfigOption(comment = "Accent color for normal notifications", hex = true)
+    public static int notificationNormalAccent = 0xFF00FFAA;
+
+    @ConfigOption(comment = "Accent color for challenge notifications", hex = true)
+    public static int notificationChallengeAccent = 0xFFAA00FF;
+
+    @ConfigOption(comment = "Title color for normal notifications", hex = true)
+    public static int notificationTitleColor = 0xFFFFFFFF;
+
+    @ConfigOption(comment = "Title color for challenge notifications", hex = true)
+    public static int notificationChallengeTitleColor = 0xFFFF77FF;
+
+    @ConfigOption(comment = "Subtitle color for notifications", hex = true)
+    public static int notificationSubtitleColor = 0xFFAAAAAA;
 
     @ConfigSection("locked_normal")
     @ConfigOption(comment = "Background gradient start", hex = true)

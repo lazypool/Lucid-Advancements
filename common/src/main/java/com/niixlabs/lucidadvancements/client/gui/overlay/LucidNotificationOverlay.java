@@ -99,9 +99,9 @@ public final class LucidNotificationOverlay {
         float scaleMod = GuiScale.scaleModifier(mc);
         int screenWidth = (int) Math.ceil(mc.getWindow().getScreenWidth() / targetScale);
         int screenHeight = (int) Math.ceil(mc.getWindow().getScreenHeight() / targetScale);
-        int limit = screenHeight - LucidConfig.overlayBottomScreenMargin;
+        int limit = screenHeight - LucidConfig.notificationBottomScreenMargin;
 
-        int notificationWidth = LucidConfig.overlayBoxWidth;
+        int notificationWidth = LucidConfig.notificationWidth;
         int height = Math.max(MIN_NOTIFICATION_HEIGHT, LucidConfig.notificationHeight);
         int x = (screenWidth - notificationWidth) / 2;
         int y = Math.max(0, LucidConfig.notificationTopMargin);
@@ -124,7 +124,7 @@ public final class LucidNotificationOverlay {
             ItemStack icon = icons.isEmpty() ? ItemStack.EMPTY : icons.get(timed.iconIndex);
 
             renderNotification(guiGraphics, font, timed.notification, icon, x, y, notificationWidth, height);
-            y += height + LucidConfig.overlayBoxSpacing;
+            y += height + LucidConfig.notificationSpacing;
         }
 
         guiGraphics.pose().popPose();
@@ -145,22 +145,22 @@ public final class LucidNotificationOverlay {
         float scaleMod = GuiScale.scaleModifier(mc);
         int screenWidth = (int) Math.ceil(mc.getWindow().getScreenWidth() / targetScale);
         int screenHeight = (int) Math.ceil(mc.getWindow().getScreenHeight() / targetScale);
-        int limit = screenHeight - LucidConfig.overlayBottomScreenMargin;
+        int limit = screenHeight - LucidConfig.effectBottomScreenMargin;
 
         int effectWidth = Math.max(1, LucidConfig.effectWidth);
         int rowHeight = Math.max(MIN_EFFECT_ROW_HEIGHT, LucidConfig.effectRowHeight);
         int spacing = Math.max(0, LucidConfig.effectRowSpacing);
-        int startY = LucidConfig.overlayStartY;
+        int startY = LucidConfig.effectStartY;
         int availableRows = (limit - startY + spacing) / (rowHeight + spacing);
         int rows = Math.min(Math.max(1, LucidConfig.effectMaxRows), availableRows);
         if (rows <= 0) {
             return;
         }
 
-        int maxRight = screenWidth - LucidConfig.overlayRightMargin;
+        int maxRight = screenWidth - LucidConfig.effectRightMargin;
         maxRight = Math.min(maxRight, screenWidth / 2 - spacing);
         if (!NOTIFICATIONS.isEmpty()) {
-            maxRight = Math.min(maxRight, (screenWidth - LucidConfig.overlayBoxWidth) / 2 - spacing);
+            maxRight = Math.min(maxRight, (screenWidth - LucidConfig.notificationWidth) / 2 - spacing);
         }
 
         Font font = mc.font;
@@ -193,7 +193,7 @@ public final class LucidNotificationOverlay {
             }
 
             guiGraphics.drawString(font, Component.translatable(Constants.MOD_ID + ".overlay.hidden_count", hidden),
-                    Math.max(0, LucidConfig.effectLeftMargin), infoY, LucidConfig.overlayCriterionTextColor, true);
+                    Math.max(0, LucidConfig.effectLeftMargin), infoY, LucidConfig.effectSubtitleColor, true);
         }
 
         guiGraphics.pose().popPose();
@@ -230,8 +230,8 @@ public final class LucidNotificationOverlay {
     }
 
     private static void renderNotification(GuiGraphics guiGraphics, Font font, Notification notification, ItemStack icon, int x, int y, int width, int height) {
-        guiGraphics.fill(x, y, x + width, y + height, LucidConfig.overlayBgColor);
-        guiGraphics.fill(x, y, x + LucidConfig.overlayAccentWidth, y + height, notification.accent);
+        guiGraphics.fill(x, y, x + width, y + height, LucidConfig.notificationBgColor);
+        guiGraphics.fill(x, y, x + LucidConfig.notificationAccentWidth, y + height, notification.accent);
 
         int textY = y + (height - 18) / 2;
 
@@ -239,14 +239,14 @@ public final class LucidNotificationOverlay {
         guiGraphics.pose().translate(0, 0, 50);
 
         if (!icon.isEmpty()) {
-            guiGraphics.renderItem(icon, x + LucidConfig.overlayIconXOffset, y + (height - 16) / 2);
+            guiGraphics.renderItem(icon, x + LucidConfig.notificationIconXOffset, y + (height - 16) / 2);
         }
 
-        String title = font.plainSubstrByWidth(notification.title.getString(), width - LucidConfig.overlayTitleMaxWidthPadding);
-        String subtitle = font.plainSubstrByWidth(notification.subtitle.getString(), width - LucidConfig.overlayTitleMaxWidthPadding);
+        String title = font.plainSubstrByWidth(notification.title.getString(), width - LucidConfig.notificationTitleMaxWidthPadding);
+        String subtitle = font.plainSubstrByWidth(notification.subtitle.getString(), width - LucidConfig.notificationTitleMaxWidthPadding);
 
-        guiGraphics.drawString(font, title, x + LucidConfig.overlayTitleXOffset, textY, notification.titleColor, true);
-        guiGraphics.drawString(font, subtitle, x + LucidConfig.overlayTitleXOffset, textY + 11, LucidConfig.overlayCriterionTextColor, true);
+        guiGraphics.drawString(font, title, x + LucidConfig.notificationTitleXOffset, textY, notification.titleColor, true);
+        guiGraphics.drawString(font, subtitle, x + LucidConfig.notificationTitleXOffset, textY + 11, LucidConfig.notificationSubtitleColor, true);
 
         guiGraphics.pose().popPose();
     }
@@ -256,21 +256,21 @@ public final class LucidNotificationOverlay {
         int accent = value.isBeneficial() ? LucidConfig.effectBeneficialAccent
                 : value.getCategory() == MobEffectCategory.HARMFUL ? LucidConfig.effectHarmfulAccent : LucidConfig.effectNeutralAccent;
 
-        guiGraphics.fill(x, y, x + width, y + rowHeight, LucidConfig.overlayBgColor);
-        guiGraphics.fill(x, y, x + LucidConfig.overlayAccentWidth, y + rowHeight, accent);
+        guiGraphics.fill(x, y, x + width, y + rowHeight, LucidConfig.effectBgColor);
+        guiGraphics.fill(x, y, x + LucidConfig.effectAccentWidth, y + rowHeight, accent);
 
         int textY = y + (rowHeight - 18) / 2;
 
         guiGraphics.pose().pushPose();
         guiGraphics.pose().translate(0, 0, 50);
-        guiGraphics.blit(x + LucidConfig.overlayIconXOffset, y + (rowHeight - 16) / 2, 0, 16, 16,
+        guiGraphics.blit(x + LucidConfig.effectIconXOffset, y + (rowHeight - 16) / 2, 0, 16, 16,
                 mc.getMobEffectTextures().get(effect.getEffect()));
 
-        String name = font.plainSubstrByWidth(effectName(effect).getString(), width - LucidConfig.overlayTitleMaxWidthPadding);
+        String name = font.plainSubstrByWidth(effectName(effect).getString(), width - LucidConfig.effectTitleMaxWidthPadding);
         String duration = MobEffectUtil.formatDuration(effect, 1.0F, tickRate(mc)).getString();
 
-        guiGraphics.drawString(font, name, x + LucidConfig.overlayTitleXOffset, textY, LucidConfig.overlayTitleColor, true);
-        guiGraphics.drawString(font, duration, x + LucidConfig.overlayTitleXOffset, textY + 11, LucidConfig.overlayCriterionTextColor, true);
+        guiGraphics.drawString(font, name, x + LucidConfig.effectTitleXOffset, textY, LucidConfig.effectTitleColor, true);
+        guiGraphics.drawString(font, duration, x + LucidConfig.effectTitleXOffset, textY + 11, LucidConfig.effectSubtitleColor, true);
 
         guiGraphics.pose().popPose();
     }

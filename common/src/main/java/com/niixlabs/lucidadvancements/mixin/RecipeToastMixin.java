@@ -50,8 +50,8 @@ public abstract class RecipeToastMixin implements LucidNotificationOverlay.Provi
                 icon,
                 Component.translatable("recipe.toast.title"),
                 Component.translatable("recipe.toast.description"),
-                LucidConfig.overlayNormalAccent,
-                LucidConfig.overlayTitleColor
+                LucidConfig.notificationNormalAccent,
+                LucidConfig.notificationTitleColor
         );
     }
 }

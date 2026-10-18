@@ -25,8 +25,8 @@ public abstract class AdvancementToastMixin implements LucidNotificationOverlay.
         }
 
         int accent = display.getType() == AdvancementType.CHALLENGE
-                ? LucidConfig.overlayChallengeAccent
-                : LucidConfig.overlayNormalAccent;
+                ? LucidConfig.notificationChallengeAccent
+                : LucidConfig.notificationNormalAccent;
 
         if (display.getType() == AdvancementType.CHALLENGE) {
             Minecraft.getInstance().getSoundManager().play(
@@ -35,8 +35,8 @@ public abstract class AdvancementToastMixin implements LucidNotificationOverlay.
         }
 
         int titleColor = display.getType() == AdvancementType.CHALLENGE
-                ? LucidConfig.overlayChallengeTitleColor
-                : LucidConfig.overlayTitleColor;
+                ? LucidConfig.notificationChallengeTitleColor
+                : LucidConfig.notificationTitleColor;
 
         return LucidNotificationOverlay.Notification.item(
                 display.getIcon(),
