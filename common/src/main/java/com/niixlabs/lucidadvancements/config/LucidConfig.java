@@ -26,7 +26,7 @@ public final class LucidConfig {
     @ConfigOption(comment = "Config watcher (Needs Restart)")
     public static boolean useConfigWatcher = false;
 
-    @ConfigSection("overlay")
+    @ConfigSection("hud_overlay")
     @ConfigOption(comment = "Background color for overlay boxes", hex = true)
     public static int overlayBgColor = 0x880A0A0A;
 
@@ -56,45 +56,6 @@ public final class LucidConfig {
 
     @ConfigOption(comment = "Right screen margin for overlay boxes")
     public static int overlayRightMargin = 8;
-
-    @ConfigOption(comment = "Left screen margin for effect cards")
-    public static int overlayLeftMargin = 8;
-
-    @ConfigOption(comment = "Show the custom left-side effect display")
-    public static boolean effectEnabled = true;
-
-    @ConfigOption(comment = "Width of effect cards (minimum 1)")
-    public static int effectWidth = 100;
-
-    @ConfigOption(comment = "Height of each effect row (minimum 22)")
-    public static int effectRowHeight = 22;
-
-    @ConfigOption(comment = "Spacing between effect rows and columns")
-    public static int effectRowSpacing = 5;
-
-    @ConfigOption(comment = "Maximum effect rows per column before starting a new column")
-    public static int effectMaxRows = 8;
-
-    @ConfigOption(comment = "Accent color for beneficial effects", hex = true)
-    public static int effectBeneficialAccent = 0xFF00FFAA;
-
-    @ConfigOption(comment = "Accent color for harmful effects", hex = true)
-    public static int effectHarmfulAccent = 0xFFFF5555;
-
-    @ConfigOption(comment = "Accent color for neutral effects", hex = true)
-    public static int effectNeutralAccent = 0xFFFFFF55;
-
-    @ConfigOption(comment = "Base notification display time in milliseconds")
-    public static int notificationDuration = 5000;
-
-    @ConfigOption(comment = "Maximum simultaneous notifications")
-    public static int notificationMaxCount = 6;
-
-    @ConfigOption(comment = "Height of notification cards (minimum 30)")
-    public static int notificationHeight = 30;
-
-    @ConfigOption(comment = "Top screen margin for centered notifications")
-    public static int notificationTopMargin = 12;
 
     @ConfigOption(comment = "Starting Y position for the first box")
     public static int overlayStartY = 55;
@@ -143,6 +104,47 @@ public final class LucidConfig {
 
     @ConfigOption(comment = "Padding subtracted from width to truncate criteria")
     public static int overlayCriterionMaxWidthPadding = 10;
+
+    @ConfigSection("hud_effects")
+    @ConfigOption(comment = "Left screen margin for effect cards")
+    public static int effectLeftMargin = 8;
+
+    @ConfigOption(comment = "Show the custom left-side effect display")
+    public static boolean effectEnabled = true;
+
+    @ConfigOption(comment = "Width of effect cards (minimum 1)")
+    public static int effectWidth = 100;
+
+    @ConfigOption(comment = "Height of each effect row (minimum 22)")
+    public static int effectRowHeight = 22;
+
+    @ConfigOption(comment = "Spacing between effect rows and columns")
+    public static int effectRowSpacing = 5;
+
+    @ConfigOption(comment = "Maximum effect rows per column before starting a new column")
+    public static int effectMaxRows = 8;
+
+    @ConfigOption(comment = "Accent color for beneficial effects", hex = true)
+    public static int effectBeneficialAccent = 0xFF00FFAA;
+
+    @ConfigOption(comment = "Accent color for harmful effects", hex = true)
+    public static int effectHarmfulAccent = 0xFFFF5555;
+
+    @ConfigOption(comment = "Accent color for neutral effects", hex = true)
+    public static int effectNeutralAccent = 0xFFFFFF55;
+
+    @ConfigSection("hud_notifications")
+    @ConfigOption(comment = "Base notification display time in milliseconds")
+    public static int notificationDuration = 5000;
+
+    @ConfigOption(comment = "Maximum simultaneous notifications")
+    public static int notificationMaxCount = 6;
+
+    @ConfigOption(comment = "Height of notification cards (minimum 30)")
+    public static int notificationHeight = 30;
+
+    @ConfigOption(comment = "Top screen margin for centered notifications")
+    public static int notificationTopMargin = 12;
 
     @ConfigSection("locked_normal")
     @ConfigOption(comment = "Background gradient start", hex = true)

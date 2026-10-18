@@ -175,7 +175,7 @@ public final class LucidNotificationOverlay {
         for (int i = 0; i < effects.size(); i++) {
             int column = i / rows;
             int row = i % rows;
-            int x = Math.max(0, LucidConfig.overlayLeftMargin) + column * (effectWidth + spacing);
+            int x = Math.max(0, LucidConfig.effectLeftMargin) + column * (effectWidth + spacing);
             if (x + effectWidth > maxRight) {
                 break;
             }
@@ -193,7 +193,7 @@ public final class LucidNotificationOverlay {
             }
 
             guiGraphics.drawString(font, Component.translatable(Constants.MOD_ID + ".overlay.hidden_count", hidden),
-                    Math.max(0, LucidConfig.overlayLeftMargin), infoY, LucidConfig.overlayCriterionTextColor, true);
+                    Math.max(0, LucidConfig.effectLeftMargin), infoY, LucidConfig.overlayCriterionTextColor, true);
         }
 
         guiGraphics.pose().popPose();
