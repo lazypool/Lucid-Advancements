@@ -34,6 +34,7 @@ public final class LucidAdvancementsOverlay {
     public static void render(GuiGraphics guiGraphics, float partialTick) {
         Minecraft mc = Minecraft.getInstance();
         TrackedAdvancementsCache.syncIfNeeded(mc);
+        LucidNotificationOverlay.render(guiGraphics);
 
         if (mc.options.hideGui || mc.player == null || LucidAdvancementsScreen.TRACKED_ADVANCEMENTS.isEmpty()) return;
         if (mc.getConnection() == null || mc.getConnection().getAdvancements() == null) return;

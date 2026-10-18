@@ -57,6 +57,16 @@ Keep your current goals in sight at all times. Lucid Advancements features a hig
 
 ***
 
+## UNIFIED NOTIFICATIONS & EFFECTS
+
+Advancement completion and recipe unlocks now share the HUD style in centered top notifications, while active potion and beacon effects are displayed on the left in the same visual language.
+
+*   **Unified Popups:** Advancement and recipe notifications appear centered at the top with the same background, accent, icon, and text styling as the overlay. All visible notifications share one countdown, so a new popup keeps the whole group on screen and they disappear together. Notifications are HUD-level and may be hidden while a screen is open.
+*   **Effect HUD:** Active potion and beacon effects are displayed in a left-side grid with matching cards, names including amplifier levels, and optional multi-column overflow. Column count depends on screen width and visible HUD elements; extra effects show a hidden-count hint. Disabling the custom HUD restores vanilla effect rendering.
+*   **Compatibility Note:** NeoForge-specific custom effect extensions are not adapted yet; effect visibility follows vanilla `showIcon()` rules.
+
+***
+
 ## QUALITY OF LIFE, CONFIG & CUSTOMIZATION
 
 *   **Hot-Reloadable Configuration:** Everything can be customized to your liking via the new `lucidadvancements.properties` config file. Best of all, it supports an **hot-reload system**—changes apply instantly without needing to restart the game!
