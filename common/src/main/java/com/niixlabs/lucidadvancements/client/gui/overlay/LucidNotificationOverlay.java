@@ -102,9 +102,9 @@ public final class LucidNotificationOverlay {
         int screenHeight = (int) Math.ceil(mc.getWindow().getScreenHeight() / targetScale);
         int limit = screenHeight - LucidConfig.overlayBottomScreenMargin;
 
-        int width = LucidConfig.overlayBoxWidth;
+        int notificationWidth = LucidConfig.overlayBoxWidth;
         int height = Math.max(MIN_NOTIFICATION_HEIGHT, LucidConfig.notificationHeight);
-        int x = (screenWidth - width) / 2;
+        int x = (screenWidth - notificationWidth) / 2;
         int y = Math.max(0, LucidConfig.notificationTopMargin);
 
         Font font = mc.font;
@@ -124,7 +124,7 @@ public final class LucidNotificationOverlay {
             List<ItemStack> icons = timed.notification.itemIcons;
             ItemStack icon = icons.isEmpty() ? ItemStack.EMPTY : icons.get(timed.iconIndex);
 
-            renderNotification(guiGraphics, font, timed.notification, icon, x, y, width, height);
+            renderNotification(guiGraphics, font, timed.notification, icon, x, y, notificationWidth, height);
             y += height + LucidConfig.overlayBoxSpacing;
         }
 
@@ -148,7 +148,7 @@ public final class LucidNotificationOverlay {
         int screenHeight = (int) Math.ceil(mc.getWindow().getScreenHeight() / targetScale);
         int limit = screenHeight - LucidConfig.overlayBottomScreenMargin;
 
-        int width = LucidConfig.overlayBoxWidth;
+        int effectWidth = Math.max(1, LucidConfig.effectHudWidth);
         int rowHeight = Math.max(MIN_EFFECT_ROW_HEIGHT, LucidConfig.effectRowHeight);
         int spacing = Math.max(0, LucidConfig.effectRowSpacing);
         int startY = LucidConfig.overlayStartY;
@@ -176,13 +176,13 @@ public final class LucidNotificationOverlay {
         for (int i = 0; i < effects.size(); i++) {
             int column = i / rows;
             int row = i % rows;
-            int x = Math.max(0, LucidConfig.overlayLeftMargin) + column * (width + spacing);
-            if (x + width > maxRight) {
+            int x = Math.max(0, LucidConfig.overlayLeftMargin) + column * (effectWidth + spacing);
+            if (x + effectWidth > maxRight) {
                 break;
             }
 
             int y = startY + row * (rowHeight + spacing);
-            renderEffect(guiGraphics, font, mc, effects.get(i), x, y, width, rowHeight);
+            renderEffect(guiGraphics, font, mc, effects.get(i), x, y, effectWidth, rowHeight);
             rendered++;
         }
 
@@ -254,11 +254,11 @@ public final class LucidNotificationOverlay {
 
     private static void renderEffect(GuiGraphics guiGraphics, Font font, Minecraft mc, MobEffectInstance effect, int x, int y, int width, int rowHeight) {
         MobEffect value = effect.getEffect().value();
-        int accent = value.isBeneficial() ? LucidConfig.overlayNormalAccent
+        int accent = value.isBeneficial() ? LucidConfig.effectBeneficialAccent
                 : value.getCategory() == MobEffectCategory.HARMFUL ? LucidConfig.effectHarmfulAccent : LucidConfig.effectNeutralAccent;
 
         guiGraphics.fill(x, y, x + width, y + rowHeight, LucidConfig.overlayBgColor);
-        guiGraphics.fill(x + width - LucidConfig.overlayAccentWidth, y, x + width, y + rowHeight, accent);
+        guiGraphics.fill(x, y, x + LucidConfig.overlayAccentWidth, y + rowHeight, accent);
 
         int textY = y + (rowHeight - 18) / 2;
 

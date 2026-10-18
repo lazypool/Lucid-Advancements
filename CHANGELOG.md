@@ -12,6 +12,8 @@
 * Notifications now share a single countdown that refreshes whenever a new notification appears, so they disappear together.
 * Moved persistent active effect icons to a left-side grid and restyled them to match the overlay.
 * The effect grid keeps clear of centered notifications and the right pinned HUD.
+* Effect HUD cards now use a dedicated configurable width and place their accent strip on the left.
+* Added separate effect accent colors for beneficial, harmful, and neutral effects (green, red, and yellow by default).
 * Added clamping for new notification and effect HUD settings to prevent invalid layouts or crashes.
 
 ---

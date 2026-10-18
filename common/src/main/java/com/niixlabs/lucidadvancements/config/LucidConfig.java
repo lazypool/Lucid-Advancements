@@ -63,6 +63,9 @@ public final class LucidConfig {
     @ConfigOption(comment = "Show the custom left-side effect HUD")
     public static boolean effectHudEnabled = true;
 
+    @ConfigOption(comment = "Width of effect HUD cards (minimum 1)")
+    public static int effectHudWidth = 100;
+
     @ConfigOption(comment = "Height of each effect HUD row (minimum 22)")
     public static int effectRowHeight = 22;
 
@@ -72,11 +75,14 @@ public final class LucidConfig {
     @ConfigOption(comment = "Maximum effect rows per column before starting a new column")
     public static int effectHudMaxRows = 8;
 
+    @ConfigOption(comment = "Accent color for beneficial effects", hex = true)
+    public static int effectBeneficialAccent = 0xFF00FFAA;
+
     @ConfigOption(comment = "Accent color for harmful effects", hex = true)
     public static int effectHarmfulAccent = 0xFFFF5555;
 
     @ConfigOption(comment = "Accent color for neutral effects", hex = true)
-    public static int effectNeutralAccent = 0xFFAAAAAA;
+    public static int effectNeutralAccent = 0xFFFFFF55;
 
     @ConfigOption(comment = "Base notification display time in milliseconds")
     public static int notificationDuration = 5000;
