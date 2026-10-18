@@ -8,6 +8,7 @@
   "client": [
     "AdvancementsScreenMixin",
     "ClientAdvancementsMixin",
+    "KeyboardHandlerMixin",
     "ScreenMixin"
   ],
   "server": [],

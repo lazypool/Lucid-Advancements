@@ -37,17 +37,19 @@ The vanilla advancement tree can become entirely unreadable when playing with mu
 Finding a specific advancement among thousands is now instant. The top navigation bar includes powerful tools to narrow down your search:
 
 *   **Global Search Bar:** Search for advancements by Title, Description, or Category. **You can also combine `@modid` filters with free text** for pinpoint accuracy! > **Examples:** `@minecraft`, `@farmersdelight diamond`, `@create`
-*   **Smart Dropdown Filtering:** Use the top Filter dropdown to easily switch between displaying _All_, _Partial_, _Completed_, _Uncompleted_, _Challenges_, or your currently _Tracked_ advancements.
+*   **Smart Dropdown Filtering:** Use the top Filter dropdown to easily switch between displaying _All_, _Partial_, _Completed_, _Uncompleted_, or _Challenges_ advancements.
 *   **Dynamic Progress Updates:** When searching or filtering within a section, the progress bar updates in real-time to show your completion rate *only* for the matching advancements!
 
 ***
 
-## ON-SCREEN TRACKING
+## ON-SCREEN PROGRESS TRACKING
 
-Keep your current goals in sight at all times. Lucid Advancements features a highly integrated HUD element for tracked advancements, allowing you to monitor your progress in real-time directly from your screen without constantly reopening the menu.
+Keep your current goals in sight at all times. Lucid Advancements automatically lists every incomplete advancement on a clean HUD overlay, so you can monitor your progress without constantly reopening the menu.
 
-*   **Persistent Tracking:** Tracked advancements are now saved automatically! You will no longer lose your pinned goals when reloading the game or switching worlds.
-*   **Dynamic HUD Progress Bar:** Easily visualize your completion steps directly on the HUD with the newly integrated dynamic tracker bar.
+*   **Automatic Display:** Every incomplete, visible advancement is shown by default — no manual setup required.
+*   **Paged HUD:** Up to four advancements are shown per page in the advancement tree's iteration order, reduced automatically to fit the HUD height; press `Ctrl` plus your configured advancements key (default `Ctrl + L`) to cycle pages, with the current page displayed as `x/y`.
+*   **HUD Toggle:** Press `Alt` plus your configured advancements key (default `Alt + L`) to hide or show the HUD.
+*   **Quick Access:** Pressing the configured advancements key alone still opens or closes the advancements screen.
 
 <div align="center">
   
@@ -74,7 +76,7 @@ Keep your current goals in sight at all times. Lucid Advancements features a hig
 
 ***
 
-**Lucid Advancements** is entirely **Client-Side**. It alters only the graphical interface and tracking mechanics, meaning it is perfectly safe to drop into any existing modpack or server. It reads standard vanilla and modded advancement data seamlessly without altering core mechanics.
+**Lucid Advancements** is entirely **Client-Side**. It alters only the graphical interface and progress display, meaning it is perfectly safe to drop into any existing modpack or server. It reads standard vanilla and modded advancement data seamlessly without altering core mechanics.
 
 ## Special Thanks
 

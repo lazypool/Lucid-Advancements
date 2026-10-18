@@ -1,3 +1,16 @@
+## v1.3.0
+
+* Removed the manual tracked/untracked state. The HUD now automatically displays every incomplete, visible advancement.
+* HUD entries use the advancement tree's iteration order.
+* The HUD shows up to four advancements per page, reduced automatically to fit the HUD height; press `Ctrl` plus your configured advancements key to cycle pages, with an `x/y` page indicator.
+* Press `Alt` plus your configured advancements key to toggle HUD visibility.
+* Removed the Tracked filter, track toggles, the separate Tracked progress bar, and the per-world tracking cache.
+* Category data is preloaded when advancements are received instead of during the first HUD render.
+* HUD boxes now refresh immediately after config changes or hot reloads.
+* Pressing the advancements key again now closes the advancements screen.
+
+---
+
 ## v1.2.2
 
 * Add multilingual support for config section titles #36

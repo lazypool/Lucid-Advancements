@@ -148,6 +148,10 @@ public final class ConfigManager {
     }
 
     public static void startWatcher(Class<?> configClass) {
+        startWatcher(configClass, null);
+    }
+
+    public static void startWatcher(Class<?> configClass, Runnable onReload) {
         if (watcherThread != null && watcherThread.isAlive()) return;
 
         watcherThread = new Thread(() -> {
@@ -167,6 +171,13 @@ public final class ConfigManager {
                         Thread.sleep(150);
                         if (Files.getLastModifiedTime(path).toMillis() > lastKnownModified) {
                             load(configClass);
+                            if (onReload != null) {
+                                try {
+                                    onReload.run();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
                         }
                     }
                     if (!key.reset()) break;

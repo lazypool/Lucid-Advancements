@@ -1,5 +1,7 @@
 package com.niixlabs.lucidadvancements.config;
 
+import com.niixlabs.lucidadvancements.client.gui.overlay.LucidAdvancementsOverlay;
+
 public final class LucidConfig {
     private LucidConfig() {}
 
@@ -25,13 +27,13 @@ public final class LucidConfig {
     public static boolean useConfigWatcher = false;
 
     @ConfigSection("hud_overlay")
-    @ConfigOption(comment = "Background color for pinned boxes", hex = true)
+    @ConfigOption(comment = "Background color for HUD boxes", hex = true)
     public static int overlayBgColor = 0x880A0A0A;
 
-    @ConfigOption(comment = "Accent color for normal pinned advancements", hex = true)
+    @ConfigOption(comment = "Accent color for normal auto-tracked advancements", hex = true)
     public static int overlayNormalAccent = 0xFF00FFAA;
 
-    @ConfigOption(comment = "Accent color for challenge pinned advancements", hex = true)
+    @ConfigOption(comment = "Accent color for challenge auto-tracked advancements", hex = true)
     public static int overlayChallengeAccent = 0xFFAA00FF;
 
     @ConfigOption(comment = "Title color for normal advancements", hex = true)
@@ -49,10 +51,10 @@ public final class LucidConfig {
     @ConfigOption(comment = "Icon for locked criteria")
     public static String overlayIconLocked = "\uD83D\uDD12";
 
-    @ConfigOption(comment = "Width of pinned boxes")
+    @ConfigOption(comment = "Width of HUD boxes")
     public static int overlayBoxWidth = 135;
 
-    @ConfigOption(comment = "Right screen margin for pinned boxes")
+    @ConfigOption(comment = "Right screen margin for HUD boxes")
     public static int overlayRightMargin = 8;
 
     @ConfigOption(comment = "Starting Y position for the first box")
@@ -150,9 +152,6 @@ public final class LucidConfig {
     public static int cardObtainedRareTitle = 0xFFFF77FF;
 
     @ConfigSection("card_colors")
-    @ConfigOption(comment = "Accent color for tracked cards", hex = true)
-    public static int cardTrackedActiveColor = 0xFF00FFAA;
-
     @ConfigOption(comment = "Color for inactive icons and text", hex = true)
     public static int cardInactiveColor = 0xFF555555;
 
@@ -183,9 +182,6 @@ public final class LucidConfig {
     @ConfigOption(comment = "Icon for completed criteria/advancements")
     public static String cardIconDone = "\u2714";
 
-    @ConfigOption(comment = "Icon for the track toggle")
-    public static String cardIconTracked = "\u2726";
-
     @ConfigOption(comment = "Text replacing hidden titles/descriptions")
     public static String cardHiddenLabel = "???";
 
@@ -210,9 +206,6 @@ public final class LucidConfig {
 
     @ConfigOption(comment = "Item icon X offset")
     public static int cardIconXOffset = 12;
-
-    @ConfigOption(comment = "Track icon X offset (from right edge)")
-    public static int cardTrackIconXOffset = 20;
 
     @ConfigOption(comment = "Status icon X offset (from right edge)")
     public static int cardStatusIconXOffset = 30;
@@ -318,15 +311,6 @@ public final class LucidConfig {
     @ConfigOption(comment = "Progress text color", hex = true)
     public static int screenProgressTextColor = 0xFFE0E0E0;
 
-    @ConfigOption(comment = "Tracked progress fill gradient start", hex = true)
-    public static int screenTrackedFillStart = 0xAAAA00FF;
-
-    @ConfigOption(comment = "Tracked progress fill gradient end", hex = true)
-    public static int screenTrackedFillEnd = 0xAA7700CC;
-
-    @ConfigOption(comment = "Tracked progress percentage color", hex = true)
-    public static int screenTrackedPercentageColor = 0xFFAA00FF;
-
     @ConfigOption(comment = "Header title color", hex = true)
     public static int screenHeaderTitleColor = 0xFFFFFFFF;
 
@@ -394,17 +378,20 @@ public final class LucidConfig {
 
     public static void load() {
         ConfigManager.load(LucidConfig.class);
+        LucidAdvancementsOverlay.invalidateCache();
     }
 
     public static void save() {
         ConfigManager.save(LucidConfig.class);
+        LucidAdvancementsOverlay.invalidateCache();
     }
 
     public static void updateAndSave(String fieldName, Object value) {
         ConfigManager.updateAndSave(LucidConfig.class, fieldName, value);
+        LucidAdvancementsOverlay.invalidateCache();
     }
 
     public static void startWatcher() {
-        ConfigManager.startWatcher(LucidConfig.class);
+        ConfigManager.startWatcher(LucidConfig.class, LucidAdvancementsOverlay::invalidateCache);
     }
 }
