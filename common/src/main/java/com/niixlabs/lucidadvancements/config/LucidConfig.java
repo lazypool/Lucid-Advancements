@@ -57,6 +57,39 @@ public final class LucidConfig {
     @ConfigOption(comment = "Right screen margin for HUD boxes")
     public static int overlayRightMargin = 8;
 
+    @ConfigOption(comment = "Left screen margin for the effect HUD")
+    public static int overlayLeftMargin = 8;
+
+    @ConfigOption(comment = "Show the custom left-side effect HUD")
+    public static boolean effectHudEnabled = true;
+
+    @ConfigOption(comment = "Height of each effect HUD row (minimum 22)")
+    public static int effectRowHeight = 22;
+
+    @ConfigOption(comment = "Spacing between effect HUD rows and columns")
+    public static int effectRowSpacing = 5;
+
+    @ConfigOption(comment = "Maximum effect rows per column before starting a new column")
+    public static int effectHudMaxRows = 8;
+
+    @ConfigOption(comment = "Accent color for harmful effects", hex = true)
+    public static int effectHarmfulAccent = 0xFFFF5555;
+
+    @ConfigOption(comment = "Accent color for neutral effects", hex = true)
+    public static int effectNeutralAccent = 0xFFAAAAAA;
+
+    @ConfigOption(comment = "Base notification display time in milliseconds")
+    public static int notificationDuration = 5000;
+
+    @ConfigOption(comment = "Maximum simultaneous notifications")
+    public static int notificationMaxCount = 6;
+
+    @ConfigOption(comment = "Height of notification cards (minimum 30)")
+    public static int notificationHeight = 30;
+
+    @ConfigOption(comment = "Top screen margin for centered notifications")
+    public static int notificationTopMargin = 12;
+
     @ConfigOption(comment = "Starting Y position for the first box")
     public static int overlayStartY = 55;
 

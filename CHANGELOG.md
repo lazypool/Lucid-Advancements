@@ -8,6 +8,11 @@
 * Category data is preloaded when advancements are received instead of during the first HUD render.
 * HUD boxes now refresh immediately after config changes or hot reloads.
 * Pressing the advancements key again now closes the advancements screen.
+* Replaced advancement completion and recipe unlock toasts with centered top notifications styled like the HUD overlay.
+* Notifications now share a single countdown that refreshes whenever a new notification appears, so they disappear together.
+* Moved persistent active effect icons to a left-side grid and restyled them to match the overlay.
+* The effect grid keeps clear of centered notifications and the right pinned HUD.
+* Added clamping for new notification and effect HUD settings to prevent invalid layouts or crashes.
 
 ---
 

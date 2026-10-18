@@ -7,9 +7,13 @@
   "mixins": [],
   "client": [
     "AdvancementsScreenMixin",
+    "AdvancementToastMixin",
     "ClientAdvancementsMixin",
+    "GuiEffectsMixin",
     "KeyboardHandlerMixin",
-    "ScreenMixin"
+    "RecipeToastMixin",
+    "ScreenMixin",
+    "ToastComponentMixin"
   ],
   "server": [],
   "injectors": {

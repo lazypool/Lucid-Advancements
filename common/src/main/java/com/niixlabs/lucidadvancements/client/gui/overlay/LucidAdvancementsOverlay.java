@@ -70,6 +70,7 @@ public final class LucidAdvancementsOverlay {
 
     public static void render(GuiGraphics guiGraphics, float partialTick) {
         Minecraft mc = Minecraft.getInstance();
+        LucidNotificationOverlay.render(guiGraphics);
 
         if (!visible || mc.options.hideGui || mc.player == null) return;
         if (mc.getConnection() == null || mc.getConnection().getAdvancements() == null) return;
