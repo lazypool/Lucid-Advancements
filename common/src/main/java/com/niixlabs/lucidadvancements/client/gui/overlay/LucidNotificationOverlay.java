@@ -28,10 +28,10 @@ public final class LucidNotificationOverlay {
     private static final int EFFECT_CACHE_INTERVAL_MS = 50;
     private static final int MAX_RECIPE_ICONS = 16;
     private static final int MIN_NOTIFICATION_HEIGHT = 30;
+    private static final long ICON_ROTATION_MS = 1000L;
     private static final int MIN_EFFECT_ROW_HEIGHT = 22;
 
     private static final List<TimedNotification> NOTIFICATIONS = new ArrayList<>();
-    private static long notificationExpiresAt = 0L;
     private static ClientLevel lastLevel = null;
 
     private static List<MobEffectInstance> effectCache = List.of();
@@ -53,28 +53,25 @@ public final class LucidNotificationOverlay {
         }
 
         long now = Util.getMillis();
-        if (now >= notificationExpiresAt) {
-            clearNotifications();
-        }
+        NOTIFICATIONS.removeIf(timed -> now >= timed.expiresAt);
 
         if (notification.recipe) {
             for (TimedNotification timed : NOTIFICATIONS) {
                 if (timed.notification.recipe) {
                     timed.notification.appendIcons(notification.itemIcons);
-                    notificationExpiresAt = now + notificationDuration(mc);
+                    timed.expiresAt = now + notificationDuration(mc, timed.notification.itemIcons, true);
                     return;
                 }
             }
         }
 
-        NOTIFICATIONS.add(new TimedNotification(notification, now));
+        NOTIFICATIONS.add(new TimedNotification(notification, now, now + notificationDuration(mc, notification.itemIcons, notification.recipe)));
 
         int maxNotifications = Math.max(1, LucidConfig.notificationMaxCount);
         while (NOTIFICATIONS.size() > maxNotifications) {
             NOTIFICATIONS.remove(0);
         }
 
-        notificationExpiresAt = now + notificationDuration(mc);
         playToastIn();
     }
 
@@ -90,9 +87,11 @@ public final class LucidNotificationOverlay {
         }
 
         long now = Util.getMillis();
-        if (now >= notificationExpiresAt) {
+        if (NOTIFICATIONS.removeIf(timed -> now >= timed.expiresAt)) {
             playToastOut();
-            clearNotifications();
+        }
+
+        if (NOTIFICATIONS.isEmpty()) {
             return;
         }
 
@@ -133,7 +132,7 @@ public final class LucidNotificationOverlay {
 
     public static void renderEffects(GuiGraphics guiGraphics) {
         Minecraft mc = Minecraft.getInstance();
-        if (mc.player == null || mc.options.hideGui) {
+        if (mc.player == null || mc.options.hideGui || !LucidConfig.effectEnabled) {
             return;
         }
 
@@ -148,12 +147,12 @@ public final class LucidNotificationOverlay {
         int screenHeight = (int) Math.ceil(mc.getWindow().getScreenHeight() / targetScale);
         int limit = screenHeight - LucidConfig.overlayBottomScreenMargin;
 
-        int effectWidth = Math.max(1, LucidConfig.effectHudWidth);
+        int effectWidth = Math.max(1, LucidConfig.effectWidth);
         int rowHeight = Math.max(MIN_EFFECT_ROW_HEIGHT, LucidConfig.effectRowHeight);
         int spacing = Math.max(0, LucidConfig.effectRowSpacing);
         int startY = LucidConfig.overlayStartY;
         int availableRows = (limit - startY + spacing) / (rowHeight + spacing);
-        int rows = Math.min(Math.max(1, LucidConfig.effectHudMaxRows), availableRows);
+        int rows = Math.min(Math.max(1, LucidConfig.effectMaxRows), availableRows);
         if (rows <= 0) {
             return;
         }
@@ -210,12 +209,12 @@ public final class LucidNotificationOverlay {
 
     private static void clearNotifications() {
         NOTIFICATIONS.clear();
-        notificationExpiresAt = 0L;
     }
 
-    private static long notificationDuration(Minecraft mc) {
+    private static long notificationDuration(Minecraft mc, List<ItemStack> icons, boolean recipe) {
         double multiplier = mc.options.notificationDisplayTime().get();
-        return Math.max(1L, (long) (Math.max(1, LucidConfig.notificationDuration) * multiplier));
+        long base = Math.max(1L, (long) (Math.max(1, LucidConfig.notificationDuration) * multiplier));
+        return recipe ? Math.max(base, icons.size() * ICON_ROTATION_MS + 1000L) : base;
     }
 
     private static void playToastIn() {
@@ -232,7 +231,7 @@ public final class LucidNotificationOverlay {
 
     private static void renderNotification(GuiGraphics guiGraphics, Font font, Notification notification, ItemStack icon, int x, int y, int width, int height) {
         guiGraphics.fill(x, y, x + width, y + height, LucidConfig.overlayBgColor);
-        guiGraphics.fill(x, y, x + width, y + LucidConfig.overlayAccentWidth, notification.accent);
+        guiGraphics.fill(x, y, x + LucidConfig.overlayAccentWidth, y + height, notification.accent);
 
         int textY = y + (height - 18) / 2;
 
@@ -358,12 +357,14 @@ public final class LucidNotificationOverlay {
 
     private static final class TimedNotification {
         private final Notification notification;
+        private long expiresAt;
         private long nextIconAt;
         private int iconIndex;
 
-        private TimedNotification(Notification notification, long now) {
+        private TimedNotification(Notification notification, long now, long expiresAt) {
             this.notification = notification;
-            this.nextIconAt = now + 1000L;
+            this.expiresAt = expiresAt;
+            this.nextIconAt = now + ICON_ROTATION_MS;
         }
 
         private void advanceIcon(long now) {
@@ -375,7 +376,7 @@ public final class LucidNotificationOverlay {
 
             while (now >= nextIconAt) {
                 iconIndex = (iconIndex + 1) % iconCount;
-                nextIconAt += 1000L;
+                nextIconAt += ICON_ROTATION_MS;
             }
         }
     }

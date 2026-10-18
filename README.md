@@ -44,16 +44,16 @@ Finding a specific advancement among thousands is now instant. The top navigatio
 
 ## ON-SCREEN PROGRESS TRACKING
 
-Keep your current goals in sight at all times. Lucid Advancements automatically lists every incomplete advancement on a clean HUD overlay, so you can monitor your progress without constantly reopening the menu.
+Keep your current goals in sight at all times. Lucid Advancements automatically lists every incomplete advancement on a clean overlay, so you can monitor your progress without constantly reopening the menu.
 
 *   **Automatic Display:** Every incomplete, visible advancement is shown by default — no manual setup required.
-*   **Paged HUD:** Up to four advancements are shown per page in the advancement tree's iteration order, reduced automatically to fit the HUD height; press `Ctrl` plus your configured advancements key (default `Ctrl + L`) to cycle pages, with the current page displayed as `x/y`.
-*   **HUD Toggle:** Press `Alt` plus your configured advancements key (default `Alt + L`) to hide or show the HUD.
+*   **Paged Overlay:** Up to four advancements are shown per page in the advancement tree's iteration order, reduced automatically to fit the overlay height; press `Ctrl` plus your configured advancements key (default `Ctrl + L`) to cycle pages, with the current page displayed as `x/y`.
+*   **Overlay Toggle:** Press `Alt` plus your configured advancements key (default `Alt + L`) to hide or show the overlay.
 *   **Quick Access:** Pressing the configured advancements key alone still opens or closes the advancements screen.
 
 <div align="center">
   
-![HUD Tracking](https://cdn.modrinth.com/data/cached_images/f5d4915d3e47b6f9b7032437ce26780dbd777a64.png)
+![Overlay Tracking](https://cdn.modrinth.com/data/cached_images/f5d4915d3e47b6f9b7032437ce26780dbd777a64.png)
 
 </div>
 
@@ -61,10 +61,10 @@ Keep your current goals in sight at all times. Lucid Advancements automatically 
 
 ## UNIFIED NOTIFICATIONS & EFFECTS
 
-Advancement completion and recipe unlocks now share the HUD style in centered top notifications, while active potion and beacon effects are displayed on the left in the same visual language.
+Advancement completion and recipe unlocks now share the overlay style in centered top notifications, while active effects are displayed on the left in the same visual language.
 
-*   **Unified Popups:** Advancement and recipe notifications appear centered at the top with the same background, accent, icon, and text styling as the overlay. All visible notifications share one countdown, so a new popup keeps the whole group on screen and they disappear together. Notifications are HUD-level and may be hidden while a screen is open.
-*   **Effect HUD:** Active potion and beacon effects are displayed in a left-side grid with matching cards, names including amplifier levels, and optional multi-column overflow. Column count depends on screen width and visible HUD elements; extra effects show a hidden-count hint. Disabling the custom HUD restores vanilla effect rendering.
+*   **Unified Popups:** Advancement and recipe notifications appear at the top center with the same background, accent, icon, and text styling as the overlay. Each notification keeps its own timer and disappears independently; recipe notifications stay visible for one second after their icons finish cycling. Notifications render above container screens; other screens, including pause/ESC, draw over them.
+*   **Effect Display:** Active effects are displayed in a left-side grid with matching cards, names including amplifier levels, and optional multi-column overflow. Column count depends on screen width and visible overlay elements; extra effects show a hidden-count hint. The effect display is drawn underneath open screens, like the right-side achievement overlay. Disabling the custom effect display restores vanilla effect rendering.
 *   **Compatibility Note:** NeoForge-specific custom effect extensions are not adapted yet; effect visibility follows vanilla `showIcon()` rules.
 
 ***

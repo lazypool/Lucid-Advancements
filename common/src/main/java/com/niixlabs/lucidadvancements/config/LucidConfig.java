@@ -26,8 +26,8 @@ public final class LucidConfig {
     @ConfigOption(comment = "Config watcher (Needs Restart)")
     public static boolean useConfigWatcher = false;
 
-    @ConfigSection("hud_overlay")
-    @ConfigOption(comment = "Background color for HUD boxes", hex = true)
+    @ConfigSection("overlay")
+    @ConfigOption(comment = "Background color for overlay boxes", hex = true)
     public static int overlayBgColor = 0x880A0A0A;
 
     @ConfigOption(comment = "Accent color for normal auto-tracked advancements", hex = true)
@@ -51,29 +51,29 @@ public final class LucidConfig {
     @ConfigOption(comment = "Icon for locked criteria")
     public static String overlayIconLocked = "\uD83D\uDD12";
 
-    @ConfigOption(comment = "Width of HUD boxes")
+    @ConfigOption(comment = "Width of overlay boxes")
     public static int overlayBoxWidth = 135;
 
-    @ConfigOption(comment = "Right screen margin for HUD boxes")
+    @ConfigOption(comment = "Right screen margin for overlay boxes")
     public static int overlayRightMargin = 8;
 
-    @ConfigOption(comment = "Left screen margin for the effect HUD")
+    @ConfigOption(comment = "Left screen margin for effect cards")
     public static int overlayLeftMargin = 8;
 
-    @ConfigOption(comment = "Show the custom left-side effect HUD")
-    public static boolean effectHudEnabled = true;
+    @ConfigOption(comment = "Show the custom left-side effect display")
+    public static boolean effectEnabled = true;
 
-    @ConfigOption(comment = "Width of effect HUD cards (minimum 1)")
-    public static int effectHudWidth = 100;
+    @ConfigOption(comment = "Width of effect cards (minimum 1)")
+    public static int effectWidth = 100;
 
-    @ConfigOption(comment = "Height of each effect HUD row (minimum 22)")
+    @ConfigOption(comment = "Height of each effect row (minimum 22)")
     public static int effectRowHeight = 22;
 
-    @ConfigOption(comment = "Spacing between effect HUD rows and columns")
+    @ConfigOption(comment = "Spacing between effect rows and columns")
     public static int effectRowSpacing = 5;
 
     @ConfigOption(comment = "Maximum effect rows per column before starting a new column")
-    public static int effectHudMaxRows = 8;
+    public static int effectMaxRows = 8;
 
     @ConfigOption(comment = "Accent color for beneficial effects", hex = true)
     public static int effectBeneficialAccent = 0xFF00FFAA;

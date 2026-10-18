@@ -70,9 +70,12 @@ public final class LucidAdvancementsOverlay {
 
     public static void render(GuiGraphics guiGraphics, float partialTick) {
         Minecraft mc = Minecraft.getInstance();
-        LucidNotificationOverlay.render(guiGraphics);
+        if (mc.options.hideGui || mc.player == null) return;
+        if (mc.screen == null) {
+            LucidNotificationOverlay.render(guiGraphics);
+        }
 
-        if (!visible || mc.options.hideGui || mc.player == null) return;
+        if (!visible) return;
         if (mc.getConnection() == null || mc.getConnection().getAdvancements() == null) return;
 
         ClientAdvancements advancements = mc.getConnection().getAdvancements();

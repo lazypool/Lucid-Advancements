@@ -12,6 +12,11 @@ import java.util.Map;
 public final class ConfigManager {
     private static final String FILE_NAME = "config/lucid-advancements/lucidadvancements.properties";
     private static final String HEADER = "# Lucid Advancements Configuration File\n# Colors use ARGB Hexadecimal format (e.g., 0xAARRGGBB)\n\n";
+    private static final Map<String, String> LEGACY_ALIASES = Map.of(
+            "effectHudEnabled", "effectEnabled",
+            "effectHudWidth", "effectWidth",
+            "effectHudMaxRows", "effectMaxRows"
+    );
 
     private static long lastKnownModified = 0;
     private static Thread watcherThread;
@@ -36,6 +41,11 @@ public final class ConfigManager {
             }
 
             Map<String, String> values = readProperties(path);
+            for (Map.Entry<String, String> alias : LEGACY_ALIASES.entrySet()) {
+                if (!values.containsKey(alias.getValue()) && values.containsKey(alias.getKey())) {
+                    values.put(alias.getValue(), values.get(alias.getKey()));
+                }
+            }
             for (Field field : configClass.getDeclaredFields()) {
                 ConfigOption option = field.getAnnotation(ConfigOption.class);
                 if (option == null) continue;

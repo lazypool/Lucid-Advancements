@@ -9,6 +9,7 @@
     "AdvancementsScreenMixin",
     "AdvancementToastMixin",
     "ClientAdvancementsMixin",
+    "EffectRenderingInventoryScreenMixin",
     "GuiEffectsMixin",
     "KeyboardHandlerMixin",
     "RecipeToastMixin",
